@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导师评价信息检索</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 加载界面 -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-icon">📚</div>
+            <h2>导师评价信息检索系统</h2>
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">正在准备数据...</div>
+            </div>
+            <p class="loading-hint" id="loading-hint"></p>
+        </div>
+    </div>
+
+    <!-- 主界面 -->
+    <div id="app" style="display:none;">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <div class="header-inner">
+                <h1 class="logo">📚 导师评价信息检索</h1>
+                <span class="header-stats" id="header-stats"></span>
+            </div>
+        </header>
+
+        <!-- 搜索栏 -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="搜索导师姓名、学校、学院或评价内容..."
+                        autocomplete="off"
+                    />
+                    <button id="search-btn" class="search-btn">🔍 搜索</button>
+                </div>
+
+                <!-- 高级筛选 -->
+                <div class="filters" id="filters">
+                    <div class="filter-group">
+                        <label for="filter-school">🏫 学校</label>
+                        <select id="filter-school" class="filter-select">
+                            <option value="">全部学校</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-department">📚 学院/专业</label>
+                        <select id="filter-department" class="filter-select">
+                            <option value="">全部学院</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>⭐ 评分范围</label>
+                        <div class="score-range">
+                            <input type="number" id="filter-score-min" class="score-input" placeholder="0" min="0" max="5" step="0.5">
+                            <span>—</span>
+                            <input type="number" id="filter-score-max" class="score-input" placeholder="5" min="0" max="5" step="0.5">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>🏷️ 标签</label>
+                        <div class="tag-filters">
+                            <label class="tag-checkbox">
+                                <input type="checkbox" value="黑名单" id="tag-blacklist">
+                                黑名单
+                            </label>
+                            <label class="tag-checkbox">
+                                <input type="checkbox" value="五星推荐" id="tag-star">
+                                五星推荐
+                            </label>
+                            <label class="tag-checkbox">
+                                <input type="checkbox" value="找个好导师" id="tag-findgood">
+                                找个好导师
+                            </label>
+                        </div>
+                    </div>
+                    <button id="reset-btn" class="reset-btn">🔄 重置筛选</button>
+                </div>
+
+                <!-- 结果统计 -->
+                <div class="result-summary" id="result-summary"></div>
+            </div>
+        </section>
+
+        <!-- 结果列表 -->
+        <section class="results-section">
+            <div class="results-container" id="results-container">
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-icon">🔍</div>
+                    <p>输入关键词或选择筛选条件开始搜索</p>
+                    <p class="empty-hint">共收录 <strong id="total-count">-</strong> 条评价记录</p>
+                </div>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination" id="pagination"></div>
+        </section>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <p>数据来源：导师信息网 & 找个好导师 | 纯静态网页，所有搜索在浏览器本地完成</p>
+        </footer>
+
+        <!-- 评价详情弹窗 -->
+        <div id="detail-modal" class="modal">
+            <div class="modal-overlay" id="modal-overlay"></div>
+            <div class="modal-content" id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="lib/pako.min.js"></script>
+    <script src="lib/sql-wasm.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
